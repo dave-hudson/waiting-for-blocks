@@ -1,6 +1,7 @@
 /*
  * wfb.c
- *	Simulation used for the hashingit.com article "Waiting For Blocks".
+ *	Simulation used for the hashingit.com article "Waiting For Blocks
+ *	(Revised)" and the earlier "Waiting For Blocks".
  *
  * Copyright (C) 2015 David Hudson
  *
@@ -164,11 +165,12 @@ static void output_results(void)
 	printf("-- single blocks --\n");
 
 	for (int i = smallest_bucket1; i <= largest_bucket1; i++) {
-		double r = (double)buckets1[i];
+		double r = (double)buckets1[i] / num_res1;
+		double bucket_start = pow(10.0, (double)(i - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER); 
+		double bucket_end = pow(10.0, (double)(i + 1 - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER); 
 		cumulative_ratio1 += r;
-		printf("%d | %.6f | %.6f | %.6f\n",
-		       i, pow(10.0, (double)(i - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER),
-		       r / num_res1, cumulative_ratio1 / num_res1);
+		printf("%d | %.6f | %.6f | %.6f | %.6f\n",
+		       i, bucket_start, r, r / (bucket_end - bucket_start), cumulative_ratio1);
 	}
 
 	double num_res6 = (double)num_results6;
@@ -176,11 +178,12 @@ static void output_results(void)
 	printf("\n-- six blocks --\n");
 
 	for (int i = smallest_bucket6; i <= largest_bucket6; i++) {
-		double r = (double)buckets6[i];
+		double r = (double)buckets6[i] / num_res6;
+		double bucket_start = pow(10.0, (double)(i - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER); 
+		double bucket_end = pow(10.0, (double)(i + 1 - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER); 
 		cumulative_ratio6 += r;
-		printf("%d | %.6f | %.6f | %.6f\n",
-		       i, pow(10.0, (double)(i - (NEGATIVE_ORDERS * NUM_BUCKETS_PER_ORDER)) / (double)NUM_BUCKETS_PER_ORDER),
-		       r / num_res1, cumulative_ratio6 / num_res6);
+		printf("%d | %.6f | %.6f | %.6f | %.6f\n",
+		       i, bucket_start, r, r / (bucket_end - bucket_start), cumulative_ratio6);
 	}
 }
 
